@@ -26,21 +26,25 @@
 
     <hr />
 
-    @{
-        @foreach (Dictionary<string, string> item in ViewBag.Jobs)
-        {
+    @if (ViewBag.Jobs != null)
+    {
+      
             <table class="job-listing">
 
-                @foreach (KeyValuePair<string, string> pair in item)
+                @foreach (Job listing in ViewBag.jobs)
                 {
                     <tr>
-                        <td>@pair.Key</td>
-                        <td>@pair.Value</td>
+                        <td>
+                            <p>Id: @listing.Id</p>
+                            <p>Name: @listing.Name</p>
+                            <p>Employer: @listing.Employer</p>
+                            <p>Location: @listing.Location</p>
+                            <p>Position Type: @listing.PositionType</p>
+                            <p>Skills: @listing.CoreCompetency</p>
+                        </td>
                     </tr>
                 }
             </table>
         }
-    }
-    }
-
-</div>
+    </div>
+    

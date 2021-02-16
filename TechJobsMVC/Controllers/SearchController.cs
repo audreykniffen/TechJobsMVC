@@ -1,12 +1,9 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using TechJobs.Controllers;
-using TechJobs.Models;
 using TechJobsMVC.Data;
 using TechJobsMVC.Models;
 
@@ -16,19 +13,29 @@ namespace TechJobsMVC.Controllers
 {
     public class SearchController : Controller
     {
-        // GET: /<controller>/
         public IActionResult Index()
         {
-            ViewBag.columns = ListController.columnChoices;
+            ViewBag.columns = ListController.ColumnChoices;
             return View();
         }
 
-        // TODO #3: Create an action method to process a search request and render the updated search view. 
+
         public IActionResult Results(string searchType, string searchTerm)
         {
-            ViewBag.jobs = JobData.FindByColumnAndValue(searchType, searchTerm);
+            List<Job> jobs;
 
-            ViewBag.columns = ListController.columnChoices;
+            if (searchTerm == "" || searchTerm == null)
+            {
+                jobs = JobData.FindAll();
+                ViewBag.title = "All Jobs";
+            }
+            else
+            {
+                jobs = JobData.FindByColumnAndValue(searchType, searchTerm);
+                ViewBag.title = "Jobs in " + ListController.ColumnChoices[searchType] + " with keyword " + searchTerm + ":";
+            }
+            ViewBag.jobs = jobs;
+            ViewBag.columns = ListController.ColumnChoices;
             return View("Index");
         }
     }
