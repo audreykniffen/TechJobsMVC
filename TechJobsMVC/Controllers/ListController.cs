@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using TechJobs.Models;
+using TechJobsMVC.Data;
 using TechJobsMVC.Models;
 
 namespace TechJobs.Controllers
@@ -44,16 +46,14 @@ namespace TechJobs.Controllers
                 ViewBag.title = "All " + columnChoices[column] + " Values";
                 ViewBag.column = column;
                 ViewBag.items = items;
-                return View("Jobs");
+                return View();
             }
         }
-
         public IActionResult Jobs(string column, string value)
         {
             List<Dictionary<String, String>> jobs = JobData.FindByColumnAndValue(column, value);
             ViewBag.title = "Jobs with " + columnChoices[column] + ": " + value;
             ViewBag.jobs = jobs;
-
             return View();
         }
     }
