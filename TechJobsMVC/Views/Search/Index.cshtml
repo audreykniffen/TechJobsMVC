@@ -27,7 +27,20 @@
     <hr />
 
     @{
-        //TODO #4: Loop over the search results to display all job fields.
+        @foreach (Dictionary<string, string> item in ViewBag.Jobs)
+        {
+            <table class="job-listing">
+
+                @foreach (KeyValuePair<string, string> pair in item)
+                {
+                    <tr>
+                        <td>@pair.Key</td>
+                        <td>@pair.Value</td>
+                    </tr>
+                }
+            </table>
+        }
+    }
     }
 
 </div>
